@@ -4,7 +4,9 @@ from tkinter import *
 from turtle import right
 from unittest import loader
 from PIL import ImageTk, Image
+from tkinter.scrolledtext import ScrolledText
 import pickle
+
 
 class Pixelart:
     def __init__(self, name, length, width, ar):
@@ -29,23 +31,23 @@ class Pixelart:
     def __str__(self):
         return '\n{} has a length and width of {}, with an array code of {}.'.format(self.name, self.get_size(),
                                                                                      self.get_array())
+def openText():
+    hdl = open("output.txt", 'r')
+    text = hdl.readlines()
+    hdl.close()
+    return text
+
+def save(textFrame):
+    saveText = textFrame.get('1.0', tk.END)  # Get all text in widget.
+    fl = open("output.txt", "w")
+    fl.write(saveText)
 
 def addNewPixelArt(name, length, width, array):
+    length = int(length)
+    width = int(width)
     newPixelArt = Pixelart(name, length, width, array)
     with open((name + '.pkl'), 'wb') as save_mcpa:
         pickle.dump(newPixelArt, save_mcpa)
-
-def SaveArt():
-    emptyArray = []
-    name = input("\nName of Pixel Art [WARNING: If you name the pixel art the same name as one previously saved it will overwrite that pixel art!]: ")
-    l = int(input("Length of Pixel Art: "))
-    w = int(input("Width of Pixel Art: "))
-    for x in range(0, w):
-        b = list(map(int, input("Paste row #"+str(x+1)+": ").split(', ')))
-        print(b)
-        emptyArray.append(b)
-    addNewPixelArt(name, l, w, emptyArray)
-    emptyArray = []
 
 def load_pixelart(inputed_name):
     print(inputed_name)
@@ -53,13 +55,9 @@ def load_pixelart(inputed_name):
         with open((inputed_name + '.pkl'), 'rb') as load_mcpa:
             pixelArtLoaded = pickle.load(load_mcpa)
             print(pixelArtLoaded)
-
-            # Debug Array
-            s = pixelArtLoaded.get_array()
-            print("\n")
-            print(str(s[0][0]))
     except:
         print("\nNo saved Pixel Art found!")
+
 
 class MainMenu(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -96,7 +94,6 @@ class MainPage(tk.Frame):
         panel = Label(self, image=img)
         panel.pack(ipadx=10, ipady=10, expand=True)
 
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -126,8 +123,9 @@ class LoadPage(tk.Frame):
         load_input = Entry(self, textvariable=controller.load_var)
         load_input.pack()
 
-        submitBtn = tk.Button(self, text="Input",command=lambda: load_pixelart(controller.load_var.get()))
+        submitBtn = tk.Button(self, text="Input", command=lambda: load_pixelart(controller.load_var.get()))
         submitBtn.pack()
+
 
 class SavePage(tk.Frame):
     def __init__(self, parent, controller):
@@ -151,14 +149,19 @@ class SavePage(tk.Frame):
         length_input = Entry(self, textvariable=controller.length_var)
         length_input.pack()
 
+        text_array = Label(self, text="Array/List").pack()
+        self.textfield = ScrolledText(self, width=40, relief="raised")
+        self.textfield.pack()
+
         bou = tk.Button(self, text="Back", command=lambda: controller.up_frame("MainPage"))
         bou.pack(side=BOTTOM)
+
+        submitBtn = tk.Button(self, text="Input", command=lambda: [save(self.textfield), addNewPixelArt(controller.name_var.get(), controller.length_var.get(), controller.width_var.get(), openText())])
+        submitBtn.pack()
 
 
 if __name__ == '__main__':
     app = MainMenu()
-    app.geometry('400x100')
     blank_space = " "
     app.title("Pixel Art Loader")
     app.mainloop()
-
