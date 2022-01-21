@@ -6,6 +6,7 @@ from unittest import loader
 from PIL import ImageTk, Image
 from tkinter.scrolledtext import ScrolledText
 import pickle
+from matrixmcpiloadtest import *
 
 
 class Pixelart:
@@ -49,7 +50,7 @@ def addNewPixelArt(name, length, width, array):
     with open((name + '.pkl'), 'wb') as save_mcpa:
         pickle.dump(newPixelArt, save_mcpa)
 
-def load_pixelart(inputed_name):
+def load_pixelart(inputed_name, inputed_ip):
     print(inputed_name)
     try:
         with open((inputed_name + '.pkl'), 'rb') as load_mcpa:
@@ -57,6 +58,7 @@ def load_pixelart(inputed_name):
             print(pixelArtLoaded)
     except:
         print("\nNo saved Pixel Art found!")
+    loadArt(pixelArtLoaded, inputed_ip)
 
 
 class MainMenu(tk.Tk):
@@ -70,6 +72,7 @@ class MainMenu(tk.Tk):
         self.name_var = tk.StringVar()
         self.width_var = tk.StringVar()
         self.length_var = tk.StringVar()
+        self.ip_var = tk.StringVar()
 
         self.listing = {}
 
@@ -113,6 +116,7 @@ class LoadPage(tk.Frame):
 
         self.controller = controller
         self.load_var = controller.load_var
+        self.ip_var = controller.load_var
 
         text = Label(self, text="Input Name of Pixel Art")
         text.pack(side=TOP)
@@ -123,7 +127,13 @@ class LoadPage(tk.Frame):
         load_input = Entry(self, textvariable=controller.load_var)
         load_input.pack()
 
-        submitBtn = tk.Button(self, text="Input", command=lambda: load_pixelart(controller.load_var.get()))
+        text_ip = Label(self, text="IP: ")
+        text_ip.pack()
+
+        ip_input = Entry(self, textvariable=controller.ip_var)
+        ip_input.pack()
+
+        submitBtn = tk.Button(self, text="Input", command=lambda: load_pixelart(controller.load_var.get(), controller.ip_var.get()))
         submitBtn.pack()
 
 
