@@ -24,12 +24,14 @@ def rgb_of_pixel(img_path, x, y):
 
 def main():
     skipValue = 16
-    print("At this point only an 80x80 pixel image.")
+    #print("At this point only an 80x80 pixel image.")
     img_name = input("Input the image name to be processed : ")
+    length = int(input("Length of Image (Height): "))
+    width = int(input("Width of Image (Across): "))
     outfilename = img_name + ".txt"
     with open(outfilename, "w") as outfile:
-        for y in range(0, 80):
-            for x in range(0, 80):
+        for y in range(0, length):
+            for x in range(0, width):
                 r, g, b = rgb_of_pixel(img_name, x, y)
                 # print(r,g,b," ",end="")
                 rhex = hexcon(r);
@@ -42,4 +44,5 @@ def main():
             outfile.write("endline\n")
 
 
-main()
+if __name__ == "__main__":
+    main()
