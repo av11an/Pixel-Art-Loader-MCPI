@@ -1,7 +1,6 @@
 import os
 
 textFile = input("name of text file to edit: ")
-textFile = textFile + ".png.txt"
 
 newFileName = input("name of new file: ")
 placeholder = "placeholder.png.txt"
@@ -36,3 +35,5 @@ f3.write(new_file_content)
 f3.close()
 
 os.remove("placeholder.png.txt")
+
+
