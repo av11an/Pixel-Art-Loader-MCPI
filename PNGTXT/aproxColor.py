@@ -37,7 +37,9 @@ def colorIdentify():
     b = c.index(min(c))
     n = WoolColorsName[b]
     r = WoolColorsPI[b]
-    print(n+" "+r)
+    print(n + " " + r)
     return r
 
-colorIdentify()
+
+if __name__ == "__main__":
+    colorIdentify()
