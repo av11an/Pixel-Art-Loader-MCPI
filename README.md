@@ -6,4 +6,4 @@ if not running try commenting out
 line 6 & line 104
 
 
-80x80png2txt.py made by Craig Coleman
+png2txt.py made by Craig Coleman
