@@ -1,39 +1,42 @@
 import os
 
-textFile = input("name of text file to edit: ")
+def reformTextFile(textFile, newFileName):
+    # create new file
+    placeholder = "placeholder.png.txt"
+    f2 = open(placeholder, "x")
+    f2 = open(placeholder, "w")
 
-newFileName = input("name of new file: ")
-placeholder = "placeholder.png.txt"
+    # make everything in file into one line
+    f1 = open(textFile, "r")
 
-# create new file
-f2 = open(placeholder, "x")
-f2 = open(placeholder, "w")
+    for i, line in enumerate(f1):
+        space = " " if i != 0 else ""
+        line = line.rstrip('\n')
+        f2.write(space + line)
 
-#make all into one line
-f1 = open(textFile, "r")
+    f2.close()
+    f1.close()
 
-for i, line in enumerate(f1):
-    space = " " if i != 0 else ""
-    line = line.rstrip('\n')
-    f2.write(space + line)
+    # replace endline with newline
+    f2 = open(placeholder, "r")
+    new_file_content = ""
+    for line in f2:
+        strippedline = line.strip()
+        new_line = strippedline.replace(" endline", "\n")
+        new_file_content += new_line + "\n"
+    f2.close()
 
-f2.close()
-f1.close()
+    # create reformatted file
+    f3 = open(newFileName, "w")
+    f3.write(new_file_content)
+    f3.close()
 
-# replace endline with newline
-f2 = open(placeholder, "r")
-new_file_content = ""
-for line in f2:
-    strippedline = line.strip()
-    new_line = strippedline.replace(" endline", "\n")
-    new_file_content += new_line + "\n"
-f2.close()
+    os.remove("placeholder.png.txt")
+    os.remove("placeholder.mc.txt")
 
-
-f3 = open(newFileName + ".png.txt", "w")
-f3.write(new_file_content)
-f3.close()
-
-os.remove("placeholder.png.txt")
+if __name__ == "__main__":
+    tf = input("Name of text file to reformat with extension: ")
+    nfn = input("Input new file name without extension: ")
+    reformTextFile(tf, nfn)
 
 
