@@ -15,6 +15,7 @@ WoolColorsPI = ['0', '1', '2', '3', '4',
 
 
 def hex_to_rgb(value):
+    value = value.lstrip('#')
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
@@ -30,16 +31,20 @@ def aproxColor(hexVal, aprox_val):
     return aprox_val
 
 
-def colorIdentify():
-    array = []
-    hexColorInput = input("Input Hex Color without #, example ffffff: ")
-    c = aproxColor(hexColorInput, array)
-    b = c.index(min(c))
-    n = WoolColorsName[b]
-    r = WoolColorsPI[b]
-    print(n + " " + r)
-    return r
+def colorIdentify(hexColorInput):
+    arraycolor = []
+    if hexColorInput == "endline":
+        return "endline"
+    else:
+        c = aproxColor(hexColorInput, arraycolor)
+        b = c.index(min(c))
+        n = WoolColorsName[b]
+        r = WoolColorsPI[b]
+        #print(n + " " + r)
+        return r
 
 
 if __name__ == "__main__":
-    colorIdentify()
+    hc = input("Input Hex Color without #, example ffffff: ")
+    m = colorIdentify(hc)
+    print(m)
