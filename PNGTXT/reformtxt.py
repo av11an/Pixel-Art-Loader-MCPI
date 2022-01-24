@@ -23,14 +23,16 @@ def reformTextFile(textFile, newFileName):
     for line in f2:
         strippedline = line.strip()
         new_line = strippedline.replace(" endline", "\n")
-        new_file_content += new_line + "\n"
+        ptogether = new_line.replace(" ", "")
+        new_file_content += ptogether + "\n"
     f2.close()
 
     # create reformatted file
     f3 = open(newFileName, "w")
     f3.write(new_file_content)
-    f3.close()
+    f3.close
 
+    # remove place holders.
     os.remove("placeholder.png.txt")
     os.remove("placeholder.mc.txt")
 
