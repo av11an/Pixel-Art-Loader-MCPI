@@ -61,7 +61,7 @@ def loadArt(pA, ip):
   x,y,z = mc.player.getPos()
   mc.player.setPos(x,y-20,z-5)
   clearAir(mc,x,y,z)
-  matrix(mc,x,y-20,z+5,loadart_array,loadart_width,loadart_length)
+  matrix(mc,x+50,y-20,z+5,loadart_array,loadart_width,loadart_length)
   print("Done")
 
 
