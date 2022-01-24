@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import *
 from turtle import right
 from unittest import loader
-from PIL import ImageTk, Image
+#from PIL import ImageTk, Image
 from tkinter.scrolledtext import ScrolledText
 import pickle
 from matrixmcpiloadtest import *
@@ -101,7 +101,7 @@ class MainPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.displayImg()
+        #self.displayImg()
 
         bou = tk.Button(self, text="Load", width="40", command=lambda: controller.up_frame("LoadPage"))
         bou.pack()
